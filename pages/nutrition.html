@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nutrition — VitaCore</title>
+  <link rel="stylesheet" href="../css/main.css">
+  <style>
+    .search-bar-wrap { max-width: 600px; margin: 0 auto 60px; position: relative; }
+    .food-search { width: 100%; background: var(--surface); border: 1px solid var(--border); border-radius: 50px; padding: 16px 60px 16px 24px; color: var(--text); font-family: var(--font-body); font-size: 1rem; outline: none; transition: all 0.3s; }
+    .food-search:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(0,245,160,0.1); }
+    .search-btn { position: absolute; right: 8px; top: 50%; transform: translateY(-50%); background: var(--gradient); border: none; border-radius: 50px; padding: 10px 20px; font-family: var(--font-body); font-weight: 600; color: #050810; cursor: pointer; }
+    .diet-plans { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 40px; max-width: 1100px; margin: 0 auto 40px; }
+    .plan-tabs { display: flex; gap: 10px; margin-bottom: 32px; flex-wrap: wrap; }
+    .plan-tab { padding: 10px 22px; border-radius: 50px; border: 1px solid var(--border); font-size: 0.85rem; cursor: pointer; transition: all 0.3s; color: var(--text-muted); background: none; font-family: var(--font-body); }
+    .plan-tab.active, .plan-tab:hover { background: rgba(0,245,160,0.1); border-color: var(--accent); color: var(--accent); }
+    .plan-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; }
+    .plan-meal { background: var(--bg); border: 1px solid var(--border); border-radius: 12px; padding: 20px; }
+    .plan-meal-time { font-size: 0.75rem; letter-spacing: 2px; color: var(--accent); text-transform: uppercase; margin-bottom: 10px; }
+    .plan-meal h4 { font-size: 0.95rem; margin-bottom: 6px; }
+    .plan-meal p { color: var(--text-muted); font-size: 0.8rem; }
+    .plan-meal-kcal { font-family: var(--font-display); font-size: 1.4rem; color: var(--accent); margin-top: 10px; }
+    .food-results { max-width: 1100px; margin: 0 auto; }
+    .food-item { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 22px 28px; display: flex; align-items: center; gap: 20px; margin-bottom: 12px; transition: all 0.3s; }
+    .food-item:hover { border-color: rgba(0,245,160,0.3); transform: translateX(4px); }
+    .food-emoji { font-size: 2rem; flex-shrink: 0; }
+    .food-info { flex: 1; }
+    .food-info h4 { margin-bottom: 4px; }
+    .food-info p { color: var(--text-muted); font-size: 0.82rem; }
+    .food-macros { display: flex; gap: 20px; }
+    .macro-item { text-align: center; }
+    .macro-item .val { font-family: var(--font-display); font-size: 1.3rem; }
+    .macro-item .lbl { font-size: 0.7rem; color: var(--text-muted); letter-spacing: 1px; text-transform: uppercase; }
+    .c-color { color: var(--accent2); }
+    .p-color { color: var(--accent); }
+    .f-color { color: var(--accent3); }
+    .cal-color { color: #ffd700; }
+    .add-food-btn { padding: 8px 18px; background: rgba(0,245,160,0.1); border: 1px solid rgba(0,245,160,0.3); border-radius: 50px; color: var(--accent); font-size: 0.82rem; cursor: pointer; transition: all 0.3s; white-space: nowrap; }
+    .add-food-btn:hover { background: rgba(0,245,160,0.2); }
+  </style>
+</head>
+<body>
+  <canvas id="bg-canvas"></canvas>
+  <nav class="navbar" id="navbar">
+    <div class="nav-logo"><span class="logo-icon">⬡</span><span class="logo-text">VITA<strong>CORE</strong></span></div>
+    <ul class="nav-links">
+      <li><a href="../index.html">Home</a></li>
+      <li><a href="features.html">Features</a></li>
+      <li><a href="dashboard.html">Dashboard</a></li>
+      <li><a href="nutrition.html" class="active">Nutrition</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div class="nav-actions">
+      <a href="login.html" class="btn-ghost">Login</a>
+      <a href="signup.html" class="btn-primary">Get Started</a>
+    </div>
+    <button class="nav-toggle" id="navToggle">☰</button>
+  </nav>
+
+  <section class="page-hero">
+    <p class="section-tag">NUTRITION CENTER</p>
+    <h1>FUEL YOUR <span style="background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">BODY RIGHT</span></h1>
+    <p>Search foods, log meals, and follow AI-generated diet plans tailored to your health goals.</p>
+  </section>
+
+  <!-- Macros Overview -->
+  <section style="background:var(--bg2); padding:60px;">
+    <div class="section-header" style="margin-bottom:40px;">
+      <p class="section-tag">DAILY MACROS</p>
+      <h2>Today's <em>Nutritional Balance</em></h2>
+    </div>
+    <div class="nutrition-grid" style="max-width:1000px;margin:0 auto;">
+      <div class="nutrition-card">
+        <span class="macro-badge macro-carb">CARBOHYDRATES</span>
+        <div class="macro-val" style="color:var(--accent2)">142<span style="font-size:1.5rem">g</span></div>
+        <div class="macro-label">Goal: 220g · 65% complete</div>
+        <div class="progress-bar" style="margin-top:16px"><div class="progress-fill" style="width:65%;background:linear-gradient(90deg,#00d4e0,#0ea5e9)"></div></div>
+      </div>
+      <div class="nutrition-card">
+        <span class="macro-badge macro-protein">PROTEIN</span>
+        <div class="macro-val" style="color:var(--accent)">68<span style="font-size:1.5rem">g</span></div>
+        <div class="macro-label">Goal: 120g · 57% complete</div>
+        <div class="progress-bar" style="margin-top:16px"><div class="progress-fill" style="width:57%"></div></div>
+      </div>
+      <div class="nutrition-card">
+        <span class="macro-badge macro-fat">HEALTHY FATS</span>
+        <div class="macro-val" style="color:var(--accent3)">32<span style="font-size:1.5rem">g</span></div>
+        <div class="macro-label">Goal: 60g · 53% complete</div>
+        <div class="progress-bar" style="margin-top:16px"><div class="progress-fill" style="width:53%;background:linear-gradient(90deg,#ff6b35,#ff1744)"></div></div>
+      </div>
+      <div class="nutrition-card">
+        <span class="macro-badge macro-fiber">FIBER</span>
+        <div class="macro-val" style="color:#a78bfa">18<span style="font-size:1.5rem">g</span></div>
+        <div class="macro-label">Goal: 30g · 60% complete</div>
+        <div class="progress-bar" style="margin-top:16px"><div class="progress-fill" style="width:60%;background:linear-gradient(90deg,#7c3aed,#a78bfa)"></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Food Search -->
+  <section style="background:var(--bg);padding:80px 60px;">
+    <div class="section-header">
+      <p class="section-tag">FOOD DATABASE</p>
+      <h2>Search & <em>Log Foods</em></h2>
+    </div>
+    <div class="search-bar-wrap">
+      <input type="text" class="food-search" placeholder="Search 500,000+ foods... (e.g. chicken breast, apple, oats)" id="foodSearch">
+      <button class="search-btn">Search</button>
+    </div>
+    <div class="food-results">
+      <div class="food-item">
+        <span class="food-emoji">🍗</span>
+        <div class="food-info">
+          <h4>Grilled Chicken Breast (100g)</h4>
+          <p>High-protein, low-fat lean meat — ideal for muscle building</p>
+        </div>
+        <div class="food-macros">
+          <div class="macro-item"><div class="val cal-color">165</div><div class="lbl">kcal</div></div>
+          <div class="macro-item"><div class="val p-color">31g</div><div class="lbl">protein</div></div>
+          <div class="macro-item"><div class="val c-color">0g</div><div class="lbl">carbs</div></div>
+          <div class="macro-item"><div class="val f-color">3.6g</div><div class="lbl">fat</div></div>
+        </div>
+        <button class="add-food-btn">+ Add to Log</button>
+      </div>
+      <div class="food-item">
+        <span class="food-emoji">🍚</span>
+        <div class="food-info">
+          <h4>Brown Rice, cooked (100g)</h4>
+          <p>Complex carbohydrate, fiber-rich whole grain</p>
+        </div>
+        <div class="food-macros">
+          <div class="macro-item"><div class="val cal-color">123</div><div class="lbl">kcal</div></div>
+          <div class="macro-item"><div class="val p-color">2.7g</div><div class="lbl">protein</div></div>
+          <div class="macro-item"><div class="val c-color">26g</div><div class="lbl">carbs</div></div>
+          <div class="macro-item"><div class="val f-color">0.9g</div><div class="lbl">fat</div></div>
+        </div>
+        <button class="add-food-btn">+ Add to Log</button>
+      </div>
+      <div class="food-item">
+        <span class="food-emoji">🥑</span>
+        <div class="food-info">
+          <h4>Avocado (100g)</h4>
+          <p>Rich in healthy monounsaturated fats and potassium</p>
+        </div>
+        <div class="food-macros">
+          <div class="macro-item"><div class="val cal-color">160</div><div class="lbl">kcal</div></div>
+          <div class="macro-item"><div class="val p-color">2g</div><div class="lbl">protein</div></div>
+          <div class="macro-item"><div class="val c-color">9g</div><div class="lbl">carbs</div></div>
+          <div class="macro-item"><div class="val f-color">15g</div><div class="lbl">fat</div></div>
+        </div>
+        <button class="add-food-btn">+ Add to Log</button>
+      </div>
+      <div class="food-item">
+        <span class="food-emoji">🥣</span>
+        <div class="food-info">
+          <h4>Rolled Oats, dry (100g)</h4>
+          <p>High fiber, sustained energy breakfast staple</p>
+        </div>
+        <div class="food-macros">
+          <div class="macro-item"><div class="val cal-color">389</div><div class="lbl">kcal</div></div>
+          <div class="macro-item"><div class="val p-color">17g</div><div class="lbl">protein</div></div>
+          <div class="macro-item"><div class="val c-color">66g</div><div class="lbl">carbs</div></div>
+          <div class="macro-item"><div class="val f-color">7g</div><div class="lbl">fat</div></div>
+        </div>
+        <button class="add-food-btn">+ Add to Log</button>
+      </div>
+      <div class="food-item">
+        <span class="food-emoji">🐟</span>
+        <div class="food-info">
+          <h4>Salmon Fillet (100g)</h4>
+          <p>Omega-3 rich fish, excellent protein source</p>
+        </div>
+        <div class="food-macros">
+          <div class="macro-item"><div class="val cal-color">208</div><div class="lbl">kcal</div></div>
+          <div class="macro-item"><div class="val p-color">20g</div><div class="lbl">protein</div></div>
+          <div class="macro-item"><div class="val c-color">0g</div><div class="lbl">carbs</div></div>
+          <div class="macro-item"><div class="val f-color">13g</div><div class="lbl">fat</div></div>
+        </div>
+        <button class="add-food-btn">+ Add to Log</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- AI Meal Plans -->
+  <section style="background:var(--bg2);padding:80px 60px;">
+    <div class="section-header">
+      <p class="section-tag">AI MEAL PLANS</p>
+      <h2>Personalized <em>Diet Plans</em></h2>
+    </div>
+    <div class="diet-plans" style="max-width:1100px;margin:0 auto;">
+      <div class="plan-tabs">
+        <button class="plan-tab active">Weight Loss</button>
+        <button class="plan-tab">Muscle Gain</button>
+        <button class="plan-tab">Diabetic-Friendly</button>
+        <button class="plan-tab">Keto</button>
+        <button class="plan-tab">Vegetarian</button>
+      </div>
+      <div class="plan-grid">
+        <div class="plan-meal">
+          <div class="plan-meal-time">Breakfast · 7:00 AM</div>
+          <h4>Oat Bowl + Berries</h4>
+          <p>Oats, blueberries, chia seeds, almond milk</p>
+          <div class="plan-meal-kcal">420 kcal</div>
+        </div>
+        <div class="plan-meal">
+          <div class="plan-meal-time">Mid-Morning · 10:30 AM</div>
+          <h4>Greek Yogurt</h4>
+          <p>Low-fat yogurt with honey and walnuts</p>
+          <div class="plan-meal-kcal">180 kcal</div>
+        </div>
+        <div class="plan-meal">
+          <div class="plan-meal-time">Lunch · 1:00 PM</div>
+          <h4>Chicken & Quinoa Bowl</h4>
+          <p>Grilled chicken, quinoa, roasted vegetables</p>
+          <div class="plan-meal-kcal">520 kcal</div>
+        </div>
+        <div class="plan-meal">
+          <div class="plan-meal-time">Snack · 4:00 PM</div>
+          <h4>Apple & Almonds</h4>
+          <p>1 medium apple with 20g raw almonds</p>
+          <div class="plan-meal-kcal">190 kcal</div>
+        </div>
+        <div class="plan-meal">
+          <div class="plan-meal-time">Dinner · 7:30 PM</div>
+          <h4>Salmon & Steamed Veg</h4>
+          <p>Baked salmon, broccoli, sweet potato</p>
+          <div class="plan-meal-kcal">480 kcal</div>
+        </div>
+      </div>
+      <div style="margin-top:24px;padding-top:24px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;">
+        <div>
+          <span style="font-family:var(--font-display);font-size:1.8rem;color:var(--accent)">1,790</span>
+          <span style="color:var(--text-muted);font-size:0.9rem"> kcal total · 35% protein · 40% carbs · 25% fat</span>
+        </div>
+        <a href="signup.html" class="btn-primary" style="display:inline-block">Save This Plan →</a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-bottom"><p>© 2025 VitaCore | Kiran Kumar K.R | BSc CS "A" | D.NO: 23UCS553</p></div>
+  </footer>
+  <script src="../js/main.js"></script>
+  <script>
+    document.querySelectorAll('.plan-tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('.plan-tab').forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+      });
+    });
+    document.querySelectorAll('.add-food-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        this.textContent = '✓ Added!';
+        this.style.color = '#00f5a0';
+        setTimeout(() => { this.textContent = '+ Add to Log'; this.style.color = ''; }, 1500);
+      });
+    });
+  </script>
+</body>
+</html>

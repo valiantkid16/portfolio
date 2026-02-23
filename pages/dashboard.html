@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard — VitaCore</title>
+  <link rel="stylesheet" href="../css/main.css">
+  <style>
+    .dash-section { padding: 40px 60px; max-width: 1300px; margin: 0 auto; }
+    .dash-welcome { padding: 140px 60px 40px; max-width: 1300px; margin: 0 auto; }
+    .dash-welcome h1 { font-family: var(--font-display); font-size: 2.8rem; letter-spacing: 3px; margin-bottom: 8px; }
+    .dash-welcome p { color: var(--text-muted); }
+    .section-title { font-family: var(--font-display); font-size: 1.4rem; letter-spacing: 2px; color: var(--text-muted); margin-bottom: 24px; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
+    .activity-feed { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 28px; }
+    .activity-item { display: flex; align-items: center; gap: 16px; padding: 14px 0; border-bottom: 1px solid var(--border); }
+    .activity-item:last-child { border: none; }
+    .activity-icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; flex-shrink: 0; }
+    .ai-green { background: rgba(0,245,160,0.1); }
+    .ai-blue { background: rgba(0,212,224,0.1); }
+    .ai-orange { background: rgba(255,107,53,0.1); }
+    .ai-purple { background: rgba(147,51,234,0.1); }
+    .activity-text { flex: 1; }
+    .activity-text strong { display: block; font-size: 0.9rem; }
+    .activity-text span { color: var(--text-muted); font-size: 0.8rem; }
+    .activity-time { color: var(--text-muted); font-size: 0.78rem; }
+    .chart-container { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 28px; }
+    .chart-title { font-family: var(--font-display); letter-spacing: 2px; font-size: 1rem; margin-bottom: 24px; color: var(--text-muted); }
+    .bar-chart { display: flex; align-items: flex-end; gap: 12px; height: 140px; }
+    .bar-wrap { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 6px; }
+    .bar { width: 100%; border-radius: 4px 4px 0 0; background: var(--gradient); min-height: 4px; transition: height 1s ease; }
+    .bar-label { font-size: 0.72rem; color: var(--text-muted); }
+    .bar-val { font-size: 0.72rem; color: var(--accent); font-weight: 600; }
+    .meal-table { width: 100%; border-collapse: collapse; }
+    .meal-table th { text-align: left; padding: 12px 16px; font-size: 0.78rem; letter-spacing: 2px; color: var(--text-muted); text-transform: uppercase; border-bottom: 1px solid var(--border); }
+    .meal-table td { padding: 14px 16px; font-size: 0.88rem; border-bottom: 1px solid var(--border); color: var(--text-muted); }
+    .meal-table td:first-child { color: var(--text); font-weight: 500; }
+    .meal-badge { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 0.72rem; }
+    .meal-break { background: rgba(0,212,224,0.1); color: var(--accent2); }
+    .meal-lunch { background: rgba(0,245,160,0.1); color: var(--accent); }
+    .meal-dinner { background: rgba(147,51,234,0.1); color: #a78bfa; }
+    .meal-snack { background: rgba(255,107,53,0.1); color: var(--accent3); }
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    @media(max-width:768px){ .two-col{ grid-template-columns:1fr; } .dash-section,.dash-welcome{ padding:20px; } }
+  </style>
+</head>
+<body>
+  <canvas id="bg-canvas"></canvas>
+  <nav class="navbar" id="navbar">
+    <div class="nav-logo"><span class="logo-icon">⬡</span><span class="logo-text">VITA<strong>CORE</strong></span></div>
+    <ul class="nav-links">
+      <li><a href="../index.html">Home</a></li>
+      <li><a href="features.html">Features</a></li>
+      <li><a href="dashboard.html" class="active">Dashboard</a></li>
+      <li><a href="nutrition.html">Nutrition</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div class="nav-actions">
+      <a href="login.html" class="btn-ghost">Login</a>
+      <a href="signup.html" class="btn-primary">Get Started</a>
+    </div>
+    <button class="nav-toggle" id="navToggle">☰</button>
+  </nav>
+
+  <div class="dash-welcome">
+    <p class="section-tag">GOOD MORNING</p>
+    <h1>WELCOME BACK, <span style="background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">KIRAN</span></h1>
+    <p>Monday, June 9 · Here's your health overview for today</p>
+  </div>
+
+  <!-- KPI Cards -->
+  <div class="dash-section">
+    <div class="section-title">TODAY'S METRICS</div>
+    <div class="dashboard-grid">
+      <div class="dash-card">
+        <div class="dash-card-label">Calories Consumed</div>
+        <div><span class="dash-card-value">1,248</span><span class="dash-card-unit">kcal</span></div>
+        <div class="dash-card-sub">Goal: 2,200 kcal</div>
+        <div class="progress-bar"><div class="progress-fill" style="width:57%"></div></div>
+      </div>
+      <div class="dash-card">
+        <div class="dash-card-label">Calories Burned</div>
+        <div><span class="dash-card-value">486</span><span class="dash-card-unit">kcal</span></div>
+        <div class="dash-card-sub">Workout + Daily Activity</div>
+        <div class="progress-bar"><div class="progress-fill" style="width:69%;background:linear-gradient(90deg,#00d4e0,#7c3aed)"></div></div>
+      </div>
+      <div class="dash-card">
+        <div class="dash-card-label">Water Intake</div>
+        <div><span class="dash-card-value" style="color:var(--accent2)">1.8</span><span class="dash-card-unit">L</span></div>
+        <div class="dash-card-sub">Goal: 3.0 L</div>
+        <div class="progress-bar"><div class="progress-fill" style="width:60%;background:linear-gradient(90deg,#00d4e0,#0ea5e9)"></div></div>
+      </div>
+      <div class="dash-card">
+        <div class="dash-card-label">Steps Today</div>
+        <div><span class="dash-card-value" style="color:#a78bfa">7,430</span><span class="dash-card-unit">steps</span></div>
+        <div class="dash-card-sub">Goal: 10,000</div>
+        <div class="progress-bar"><div class="progress-fill" style="width:74%;background:linear-gradient(90deg,#7c3aed,#a78bfa)"></div></div>
+      </div>
+      <div class="dash-card">
+        <div class="dash-card-label">Sleep Last Night</div>
+        <div><span class="dash-card-value" style="color:#ffd700">7.2</span><span class="dash-card-unit">hrs</span></div>
+        <div class="dash-card-sub">Quality: Good</div>
+        <div class="progress-bar"><div class="progress-fill" style="width:80%;background:linear-gradient(90deg,#ffd700,#ff8c00)"></div></div>
+      </div>
+      <div class="dash-card">
+        <div class="dash-card-label">Current BMI</div>
+        <div><span class="dash-card-value" style="color:var(--accent)">22.4</span><span class="dash-card-unit"></span></div>
+        <div class="dash-card-sub">Normal Range ✓</div>
+        <div class="progress-bar"><div class="progress-fill" style="width:52%"></div></div>
+      </div>
+      <div class="dash-card">
+        <div class="dash-card-label">Current Weight</div>
+        <div><span class="dash-card-value" style="color:var(--accent3)">68.5</span><span class="dash-card-unit">kg</span></div>
+        <div class="dash-card-sub">↓ 0.3kg this week</div>
+        <div class="progress-bar"><div class="progress-fill" style="width:65%;background:linear-gradient(90deg,#ff6b35,#ff1744)"></div></div>
+      </div>
+      <div class="dash-card">
+        <div class="dash-card-label">Net Calories</div>
+        <div><span class="dash-card-value">762</span><span class="dash-card-unit">kcal</span></div>
+        <div class="dash-card-sub">Deficit: -514 kcal</div>
+        <div class="progress-bar"><div class="progress-fill" style="width:35%"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Charts -->
+  <div class="dash-section">
+    <div class="two-col">
+      <div class="chart-container">
+        <div class="chart-title">WEEKLY CALORIE INTAKE</div>
+        <div class="bar-chart" id="calorieChart">
+          <div class="bar-wrap"><div class="bar" style="height:78%"></div><div class="bar-val">1870</div><div class="bar-label">Mon</div></div>
+          <div class="bar-wrap"><div class="bar" style="height:62%"></div><div class="bar-val">1490</div><div class="bar-label">Tue</div></div>
+          <div class="bar-wrap"><div class="bar" style="height:91%"></div><div class="bar-val">2180</div><div class="bar-label">Wed</div></div>
+          <div class="bar-wrap"><div class="bar" style="height:55%"></div><div class="bar-val">1320</div><div class="bar-label">Thu</div></div>
+          <div class="bar-wrap"><div class="bar" style="height:85%"></div><div class="bar-val">2040</div><div class="bar-label">Fri</div></div>
+          <div class="bar-wrap"><div class="bar" style="height:70%"></div><div class="bar-val">1680</div><div class="bar-label">Sat</div></div>
+          <div class="bar-wrap"><div class="bar" style="height:52%"></div><div class="bar-val">1248</div><div class="bar-label">Today</div></div>
+        </div>
+      </div>
+      <div class="activity-feed">
+        <div class="chart-title">RECENT ACTIVITY</div>
+        <div class="activity-item">
+          <div class="activity-icon ai-green">🥗</div>
+          <div class="activity-text"><strong>Breakfast Logged</strong><span>Oats, banana, almond milk — 420 kcal</span></div>
+          <span class="activity-time">8:15 AM</span>
+        </div>
+        <div class="activity-item">
+          <div class="activity-icon ai-blue">💧</div>
+          <div class="activity-text"><strong>Water Intake</strong><span>500ml logged</span></div>
+          <span class="activity-time">10:00 AM</span>
+        </div>
+        <div class="activity-item">
+          <div class="activity-icon ai-orange">🏃</div>
+          <div class="activity-text"><strong>Morning Run</strong><span>5.2 km · 32 min · 286 kcal</span></div>
+          <span class="activity-time">11:30 AM</span>
+        </div>
+        <div class="activity-item">
+          <div class="activity-icon ai-green">🥗</div>
+          <div class="activity-text"><strong>Lunch Logged</strong><span>Grilled chicken, rice, salad — 578 kcal</span></div>
+          <span class="activity-time">1:00 PM</span>
+        </div>
+        <div class="activity-item">
+          <div class="activity-icon ai-purple">📊</div>
+          <div class="activity-text"><strong>Weekly Report Ready</strong><span>View your progress summary</span></div>
+          <span class="activity-time">2:00 PM</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Meal Log -->
+  <div class="dash-section" style="padding-bottom:80px">
+    <div class="section-title">TODAY'S MEAL LOG</div>
+    <div class="chart-container">
+      <table class="meal-table">
+        <thead>
+          <tr>
+            <th>Food Item</th>
+            <th>Meal</th>
+            <th>Calories</th>
+            <th>Protein</th>
+            <th>Carbs</th>
+            <th>Fat</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Rolled Oats (100g)</td>
+            <td><span class="meal-badge meal-break">Breakfast</span></td>
+            <td>389 kcal</td>
+            <td>17g</td>
+            <td>66g</td>
+            <td>7g</td>
+          </tr>
+          <tr>
+            <td>Banana (120g)</td>
+            <td><span class="meal-badge meal-break">Breakfast</span></td>
+            <td>107 kcal</td>
+            <td>1.3g</td>
+            <td>27g</td>
+            <td>0.4g</td>
+          </tr>
+          <tr>
+            <td>Almond Milk (250ml)</td>
+            <td><span class="meal-badge meal-break">Breakfast</span></td>
+            <td>39 kcal</td>
+            <td>1g</td>
+            <td>4g</td>
+            <td>2.5g</td>
+          </tr>
+          <tr>
+            <td>Grilled Chicken (150g)</td>
+            <td><span class="meal-badge meal-lunch">Lunch</span></td>
+            <td>248 kcal</td>
+            <td>46g</td>
+            <td>0g</td>
+            <td>5g</td>
+          </tr>
+          <tr>
+            <td>Brown Rice (180g)</td>
+            <td><span class="meal-badge meal-lunch">Lunch</span></td>
+            <td>216 kcal</td>
+            <td>4.5g</td>
+            <td>45g</td>
+            <td>1.6g</td>
+          </tr>
+          <tr>
+            <td>Mixed Salad (100g)</td>
+            <td><span class="meal-badge meal-lunch">Lunch</span></td>
+            <td>25 kcal</td>
+            <td>1.8g</td>
+            <td>4.5g</td>
+            <td>0.3g</td>
+          </tr>
+          <tr>
+            <td>Apple (150g)</td>
+            <td><span class="meal-badge meal-snack">Snack</span></td>
+            <td>78 kcal</td>
+            <td>0.4g</td>
+            <td>21g</td>
+            <td>0.2g</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="footer-bottom"><p>© 2025 VitaCore | Kiran Kumar K.R | BSc CS "A" | D.NO: 23UCS553</p></div>
+  </footer>
+  <script src="../js/main.js"></script>
+</body>
+</html>

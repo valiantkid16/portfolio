@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VitaCore — Health & Nutrition Management</title>
+  <link rel="stylesheet" href="css/main.css">
+  <link href="https://fonts.googleapis.com/css2?family=Clash+Display:wght@400;600;700&family=Bebas+Neue&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- Particle Canvas -->
+  <canvas id="bg-canvas"></canvas>
+
+  <!-- Navigation -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-logo">
+      <span class="logo-icon">⬡</span>
+      <span class="logo-text">VITA<strong>CORE</strong></span>
+    </div>
+    <ul class="nav-links">
+      <li><a href="index.html" class="active">Home</a></li>
+      <li><a href="pages/features.html">Features</a></li>
+      <li><a href="pages/dashboard.html">Dashboard</a></li>
+      <li><a href="pages/nutrition.html">Nutrition</a></li>
+      <li><a href="pages/contact.html">Contact</a></li>
+    </ul>
+    <div class="nav-actions">
+      <a href="pages/login.html" class="btn-ghost">Login</a>
+      <a href="pages/signup.html" class="btn-primary">Get Started</a>
+    </div>
+    <button class="nav-toggle" id="navToggle">☰</button>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-badge">
+      <span class="badge-dot"></span>
+      AI-Powered Health Intelligence
+    </div>
+    <h1 class="hero-title">
+      <span class="line">TRANSFORM</span>
+      <span class="line accent-line">YOUR BODY.</span>
+      <span class="line">MASTER YOUR</span>
+      <span class="line stroke-line">HEALTH.</span>
+    </h1>
+    <p class="hero-sub">The ultimate platform for tracking nutrition, fitness, sleep & wellness. Built for individuals, nutritionists, and healthcare providers.</p>
+    <div class="hero-cta">
+      <a href="pages/signup.html" class="cta-main">Start Free Today</a>
+      <a href="pages/dashboard.html" class="cta-secondary">
+        <span class="play-icon">▶</span> Live Demo
+      </a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat"><span class="stat-num" data-target="50000">0</span><span>K+</span><p>Active Users</p></div>
+      <div class="stat-divider"></div>
+      <div class="stat"><span class="stat-num" data-target="98">0</span><span>%</span><p>Success Rate</p></div>
+      <div class="stat-divider"></div>
+      <div class="stat"><span class="stat-num" data-target="1200">0</span><span>+</span><p>Nutritionists</p></div>
+      <div class="stat-divider"></div>
+      <div class="stat"><span class="stat-num" data-target="500000">0</span><span>+</span><p>Meals Logged</p></div>
+    </div>
+  </section>
+
+  <!-- Marquee -->
+  <div class="marquee-wrap">
+    <div class="marquee-track">
+      <span>CALORIES ·</span><span>BMI TRACKING ·</span><span>MEAL PLANS ·</span><span>WORKOUTS ·</span><span>SLEEP MONITOR ·</span><span>WATER INTAKE ·</span><span>AI INSIGHTS ·</span><span>DIET ANALYSIS ·</span>
+      <span>CALORIES ·</span><span>BMI TRACKING ·</span><span>MEAL PLANS ·</span><span>WORKOUTS ·</span><span>SLEEP MONITOR ·</span><span>WATER INTAKE ·</span><span>AI INSIGHTS ·</span><span>DIET ANALYSIS ·</span>
+    </div>
+  </div>
+
+  <!-- Features Preview -->
+  <section class="features-preview" id="features">
+    <div class="section-header">
+      <p class="section-tag">WHAT WE OFFER</p>
+      <h2>Everything You Need to <br><em>Live Better</em></h2>
+    </div>
+    <div class="feature-grid">
+      <div class="feat-card feat-large" data-delay="0">
+        <div class="feat-icon">🥗</div>
+        <h3>Smart Nutrition Tracking</h3>
+        <p>Log meals, auto-calculate macros, calories and micronutrients with our 500K+ food database.</p>
+        <div class="feat-glow"></div>
+      </div>
+      <div class="feat-card" data-delay="100">
+        <div class="feat-icon">🏋️</div>
+        <h3>Fitness & Workout</h3>
+        <p>Custom workout schedules. Calorie burn estimations. Weekly progress charts.</p>
+        <div class="feat-glow"></div>
+      </div>
+      <div class="feat-card" data-delay="200">
+        <div class="feat-icon">😴</div>
+        <h3>Sleep & Water Monitor</h3>
+        <p>Track sleep quality and stay hydrated with smart daily reminders.</p>
+        <div class="feat-glow"></div>
+      </div>
+      <div class="feat-card" data-delay="300">
+        <div class="feat-icon">🤖</div>
+        <h3>AI Diet Suggestions</h3>
+        <p>Personalized meal plans powered by AI — weight loss, gain, diabetic-friendly and more.</p>
+        <div class="feat-glow"></div>
+      </div>
+      <div class="feat-card feat-large" data-delay="400">
+        <div class="feat-icon">📊</div>
+        <h3>Health Analytics Dashboard</h3>
+        <p>Visual analytics for calorie deficit, progress trends, and predictive risk management.</p>
+        <div class="feat-glow"></div>
+      </div>
+    </div>
+    <div class="features-cta">
+      <a href="pages/features.html" class="btn-outline">Explore All Features →</a>
+    </div>
+  </section>
+
+  <!-- How It Works -->
+  <section class="how-it-works">
+    <div class="hiw-bg-text">PROCESS</div>
+    <div class="section-header">
+      <p class="section-tag">HOW IT WORKS</p>
+      <h2>Three Steps to a <em>Healthier You</em></h2>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">01</div>
+        <div class="step-content">
+          <h3>Create Your Profile</h3>
+          <p>Enter your age, height, weight, activity level and health goals. Our system personalizes everything for you.</p>
+        </div>
+      </div>
+      <div class="step-line"></div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <div class="step-content">
+          <h3>Track Daily Activities</h3>
+          <p>Log meals, workouts, water and sleep. Our intelligent system calculates BMI, macros, and burns automatically.</p>
+        </div>
+      </div>
+      <div class="step-line"></div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <div class="step-content">
+          <h3>Get Expert Guidance</h3>
+          <p>Connect with certified nutritionists, follow AI-curated meal plans, and visualize your transformation.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Roles Section -->
+  <section class="roles-section">
+    <div class="section-header">
+      <p class="section-tag">FOR EVERYONE</p>
+      <h2>Built for Every <em>Role</em></h2>
+    </div>
+    <div class="roles-grid">
+      <div class="role-card user-card">
+        <div class="role-icon">👤</div>
+        <h3>Users</h3>
+        <ul>
+          <li>Track meals & calories</li>
+          <li>Follow workout plans</li>
+          <li>Monitor sleep & hydration</li>
+          <li>View progress analytics</li>
+        </ul>
+        <a href="pages/signup.html" class="role-btn">Join as User</a>
+      </div>
+      <div class="role-card nutritionist-card">
+        <div class="role-icon">🥼</div>
+        <h3>Nutritionists</h3>
+        <ul>
+          <li>Design custom meal plans</li>
+          <li>Consult with clients</li>
+          <li>Monitor patient progress</li>
+          <li>Provide expert guidance</li>
+        </ul>
+        <a href="pages/signup.html" class="role-btn">Join as Nutritionist</a>
+      </div>
+      <div class="role-card admin-card">
+        <div class="role-icon">🛡️</div>
+        <h3>Admins</h3>
+        <ul>
+          <li>Manage platform users</li>
+          <li>Update food databases</li>
+          <li>Ensure data security</li>
+          <li>Oversee compliance</li>
+        </ul>
+        <a href="pages/login.html" class="role-btn">Admin Login</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section class="testimonials">
+    <div class="section-header">
+      <p class="section-tag">TESTIMONIALS</p>
+      <h2>Real Results. <em>Real People.</em></h2>
+    </div>
+    <div class="testimonial-track">
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <p>"Lost 12kg in 3 months following VitaCore's AI meal plans. The calorie tracking is incredibly accurate!"</p>
+        <div class="testi-author"><span class="author-avatar">A</span><div><strong>Ananya Sharma</strong><small>User, Bangalore</small></div></div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <p>"As a nutritionist, this platform lets me manage 50+ clients efficiently with detailed health dashboards."</p>
+        <div class="testi-author"><span class="author-avatar">R</span><div><strong>Dr. Rajesh Nair</strong><small>Nutritionist, Chennai</small></div></div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <p>"The sleep and water tracking features changed my lifestyle completely. Feeling energetic every day!"</p>
+        <div class="testi-author"><span class="author-avatar">P</span><div><strong>Priya Meenakshi</strong><small>User, Hyderabad</small></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Banner -->
+  <section class="cta-banner">
+    <div class="cta-content">
+      <h2>Ready to Transform Your <span class="accent">Health?</span></h2>
+      <p>Join 50,000+ users already living healthier, smarter lives.</p>
+      <a href="pages/signup.html" class="cta-main large">Create Free Account</a>
+    </div>
+    <div class="cta-decoration">
+      <div class="deco-ring ring1"></div>
+      <div class="deco-ring ring2"></div>
+      <div class="deco-ring ring3"></div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <span class="logo-icon">⬡</span>
+        <span class="logo-text">VITA<strong>CORE</strong></span>
+        <p>Your complete health & nutrition management platform. Built with care, powered by science.</p>
+      </div>
+      <div class="footer-links">
+        <div class="footer-col">
+          <h4>Platform</h4>
+          <a href="pages/features.html">Features</a>
+          <a href="pages/dashboard.html">Dashboard</a>
+          <a href="pages/nutrition.html">Nutrition</a>
+        </div>
+        <div class="footer-col">
+          <h4>Company</h4>
+          <a href="#">About</a>
+          <a href="pages/contact.html">Contact</a>
+          <a href="#">Blog</a>
+        </div>
+        <div class="footer-col">
+          <h4>Legal</h4>
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Service</a>
+          <a href="#">HIPAA Compliance</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 VitaCore Health Systems. Developed by Kiran Kumar K.R | BSc CS "A" | D.NO: 23UCS553</p>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
